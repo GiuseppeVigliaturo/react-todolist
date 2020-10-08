@@ -1,13 +1,42 @@
-import React from 'react';
+import React,{Component} from 'react';
 import Todo from './todo'
-export default function todoList({todos, removeTodo,toggleTodo}){
+import PropTypes from 'prop-types';
+export default class TodoList extends Component {
+    constructor(props){
+        super(props);
+         if(props.error.hasError){
+            throw new Error(props.error.errorMessage);
+        }
+    }
+    componentDidMount(){
 
-return (
-<ul>
-{
- todos.map( (todo) => <Todo id ={todo.id} key={todo.id} onClick = {toggleTodo} todoItem ={todo}/>)
-}
-</ul>
+        this.props.getTodos(this.props.list);
+    }
+    //prende come parametro lo stato/le props precedenti
+    //quindi se la lista è cambiata, cioè diversa dalla precedente rifaccio 
+    //la chiamata 
+    componentDidUpdate(prevProps){
+       if(this.props.list !==prevProps.list ){
+        this.props.getTodos(this.props.list); 
+       }
+    }
+  
+render() {
+    return (
+    <ul className="todos">
+    {
+        this.props.todos.map( (todo) => 
+    <Todo list={this.props.list} todoItem ={todo} id ={todo.id} key={todo.id} {...this.props}/>)
+    }
+    </ul>
 
-);
+    )
 }
+}
+TodoList.propTypes = {
+    props:  PropTypes.shape({
+        hasError: PropTypes.bool,
+        errorMessage:PropTypes.string ,
+        todos: PropTypes.array
+    })
+  }

@@ -1,39 +1,69 @@
-//faccio l'azione e mando un messaggio alla store
-export const addTodo = (todo) => {
+import {APIURL, APIFILTERURL} from '../config/config';
+import axios from 'axios';
 
+import {
+    TODOS,
+    ADD_TODO,
+    REMOVE_TODO,
+    TOGGLE_TODO,
+    SET_FILTER,
+
+} from './actiontypes';
+
+export const getTodos = (list = 0) => {
     return {
-        type: 'ADD_TODO',
-        payload: {
-            text: todo,
-            completed: false
-        }
+        type: TODOS,
+        payload: axios.get(APIURL,{list})
+    }
+}
 
-    };
-};
+
+export const addTodo = (todo, list ) => {
+   //ADD_TODO_FULFILLED
+  // alert(todo)
+    return  {
+         type: ADD_TODO,
+        payload: axios.post(APIURL, 
+            {
+            todo:todo,
+            completed : false,
+            list:+list,
+        })
+
+     };
+ };
 
 export const removeTodo = (i) => {
 
     return {
-        type: 'REMOVE_TODO',
-        id: i
+        type: REMOVE_TODO,
+        payload: axios.delete(APIURL + '/' + i, {
+            id: i
+        })
 
     };
 };
 
-export const toggleTodo = (i) => {
+export const toggleTodo = (i, value) => {
 
     return {
-        type: 'TOGGLE_TODO',
-        id: i
+        type: TOGGLE_TODO,
+        payload: axios.patch(APIURL + '/' + i, {
+            completed: value
+        })
+
 
     };
 };
 
- export const filterTodo = (filter = 'ALL') => {
-    console.log(filter);
-     return {
-         type: 'SET_FILTER',
-         activeFilter: filter
-     }
+export const filterTodo = (filter = 'ALL') => {
 
- }
+    return {
+        type: SET_FILTER,
+        payload: axios.post(APIFILTERURL, {
+            filter
+        })
+
+    }
+
+}

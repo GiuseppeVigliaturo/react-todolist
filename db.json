@@ -1,0 +1,35 @@
+{
+  "todos": [
+    {
+      "todo": "primo todo",
+      "completed": false,
+      "list": 1,
+      "id": 1
+    },
+    {
+      "todo": "secondo todo",
+      "completed": false,
+      "list": 2,
+      "id": 2
+    },
+    {
+      "todo": "prova todo con dispatch",
+      "completed": false,
+      "list": 1,
+      "id": 3
+    }
+  ],
+  "activeFilter": {
+    "filter": "ALL"
+  },
+  "lists": [
+    {
+      "title": "prima lista",
+      "id": 1
+    },
+    {
+      "title": "seconda lista",
+      "id": 2
+    }
+  ]
+}
